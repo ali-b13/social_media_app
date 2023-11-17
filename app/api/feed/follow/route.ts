@@ -1,6 +1,6 @@
 import { NextApiRequest } from "next";
 import { NextRequest, NextResponse } from "next/server";
-
+import prisma from '@/app/libs/prismaDB'
 export const POST =async(req:NextRequest)=>{
   const {userId,followerId}=await req.json()
   

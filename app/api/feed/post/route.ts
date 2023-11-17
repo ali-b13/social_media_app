@@ -1,6 +1,6 @@
 import { NextApiRequest } from "next";
 import { NextRequest, NextResponse } from "next/server";
-
+import prisma from '@/app/libs/prismaDB'
 export const POST =async(req:Request)=>{
   const {imgSrc,comment,userId}=await req.json();
   const post =await prisma?.post.create({data:{image:imgSrc,userId:userId,content:comment},include:{user:{select:{id:true,username:true,image:true,name:true}},comments:true}})

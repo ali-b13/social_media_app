@@ -39,23 +39,24 @@ const PostList:React.FC<USERI> = ({user,displayProfile}) => {
   console.log(node,'node')
  },[isLoading,hasMore])
  const fetchMorePosts = async () => {
+  console.log("is fetching now")
    if (!isLoading) {
      setIsLoading(true);
 
      // Fetch more posts from your API or data source
-     try {
-      
-       const data = await getPosts(user.id,page,pageSize)
-        setHasMore(data.posts.length>0)
-       if (data.posts.length > 0) {
-         setPosts((prev:any)=>[...prev,...data.posts]);
-        
-         console.log(posts,'posts  and the data',data)
-         
-       }
-     } catch (error) {
-       console.error("Error fetching more posts:", error);
-     }
+   if(user.id){
+      try {
+        const data = await getPosts(user.id, page, pageSize);
+        setHasMore(data.posts.length > 0);
+        if (data.posts.length > 0) {
+          setPosts((prev: any) => [...prev, ...data.posts]);
+
+          console.log(posts, "posts  and the data", data);
+        }
+      } catch (error) {
+        console.error("Error fetching more posts:", error);
+      }
+   }
 
      setIsLoading(false);
    }
@@ -69,6 +70,7 @@ const PostList:React.FC<USERI> = ({user,displayProfile}) => {
 useEffect(()=>{
   console.log(posts,'posts')
 },[posts])
+
  useEffect(()=>{
 
    fetchMorePosts()
